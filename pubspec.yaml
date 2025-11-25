@@ -1,0 +1,33 @@
+name: analisador_texto_completo
+description: Projeto completo com autenticação MVVM e SQLite.
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  
+  # Pacotes MVVM e Gestão de Estado
+  provider: ^6.1.1 
+  
+  # Pacotes de Banco de Dados Local (SQLite)
+  sqflite: ^2.3.0
+  path: ^1.8.3
+  
+  # Pacotes de Autenticação e Validação
+  crypto: ^3.0.3 
+  mask_text_input_formatter: ^2.7.0 
+  intl: ^0.18.1
+  
+  cupertino_icons: ^1.0.8
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.1 
+
+flutter:
+  uses-material-design: true
