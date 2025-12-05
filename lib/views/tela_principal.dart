@@ -103,27 +103,34 @@ class MainScreen extends StatelessWidget {
                   const SizedBox(height: 20),
                   SizedBox(
                     width: double.infinity,
-                    child: ValueListenableBuilder<TextEditingValue>(
-                      valueListenable: mainVM.textController,
-                      builder: (context, value, child) {
-                        final isEnabled = value.text.trim().isNotEmpty;
-                        return ElevatedButton(
-                          onPressed: isEnabled ? () {
-                            mainVM.analyzeText(value.text);
-                            if (mainVM.analyzerResult != null) {
+                    // O botão está sempre habilitado para clicarmos
+                    child: ElevatedButton(
+                      onPressed: () {
+                          // 1. Chamar o ViewModel para processar o texto
+                          mainVM.analyzeText(mainVM.textController.text);
+                          
+                          // 2. Verificar se o resultado é nulo (texto estava vazio)
+                          if (mainVM.analyzerResult != null) {
                               FocusScope.of(context).unfocus();
                               Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) => ResultScreen(
-                                    result: mainVM.analyzerResult!,
+                                  MaterialPageRoute(
+                                      builder: (context) => ResultScreen(
+                                          result: mainVM.analyzerResult!,
+                                      ),
                                   ),
-                                ),
                               );
-                            }
-                          } : null,
-                          child: const Text('Analisar Texto'),
-                        );
+                          } else {
+                              // 3. Se estiver vazio, mostra a mensagem (SnackBar)
+                              FocusScope.of(context).unfocus();
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                      content: Text('Por favor, insira algum texto para analisar.'),
+                                      backgroundColor: Colors.red,
+                                  ),
+                              );
+                          }
                       },
+                      child: const Text('Analisar Texto'),
                     ),
                   ),
                   const SizedBox(height: 20),
